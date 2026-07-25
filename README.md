@@ -1,22 +1,22 @@
 # MiniPanel - Home Assistant Dashboard
 
-A sleek, full-screen Home Assistant dashboard designed for the Shelly Wall Display X2i, wall-mounted tablets, and kiosk mode.
+A full-screen Home Assistant dashboard designed for the Shelly Wall Display X2i, the older Shelly Wall Display X2, and other wall-mounted panels running in kiosk mode.
 
 ![MiniPanel Home view](screenshots/01-home.jpg)
 
 ## Features
 
-- **Full-screen panel mode** with a custom background image
-- **Kiosk mode** support that hides the header and sidebar for selected users
+- **Full-screen panel layout** with a custom background image
+- **Kiosk mode** that hides the Home Assistant header and sidebar
 - **5 main views**: Home, Lys (Lights), Klima (Climate), Musik (Music), and Status
 - **Real-time clock and weather** on the Home view
 - **Family presence** indicators with avatar photos
-- **Dishwasher status** pill when a program is running
+- **Dishwasher status** shown only when a program is running
 - **Mini music player** with playback controls on the Home view
-- **Fixed navigation menu** with active-state highlighting and a light-on indicator
-- **Lights view** with room controls, scenes, and a master switch
-- **All Lights drill-down** with controls for every configured room or light group
-- **Climate view** with two heating zones, presets, and shared controls
+- **Fixed navigation menu** with active-state highlighting
+- **Lights view** with scenes, room controls, and a master switch
+- **All Lights drill-down** with controls for every configured light group
+- **Climate view** with two heating zones and shared presets
 - **Music view** with playlist shortcuts, playback controls, and volume control
 - **Status view** for appliances and robot vacuum cleaners
 - **Idle return** that automatically navigates back to Home after 60 seconds of inactivity
@@ -25,7 +25,7 @@ A sleek, full-screen Home Assistant dashboard designed for the Shelly Wall Displ
 
 ### Home
 
-The main overview with clock, weather, family presence, mini media controls, and the fixed navigation menu.
+Main overview with clock, weather, family presence, mini media controls, and the fixed navigation menu.
 
 **Dashboard path:** `/dashboard-minipanel/home`
 
@@ -33,7 +33,7 @@ The main overview with clock, weather, family presence, mini media controls, and
 
 ### Lights
 
-The primary lighting view with scenes, room-level controls, an All Lights shortcut, and a master switch.
+Primary lighting view with scenes, room-level controls, an All Lights shortcut, and a master switch.
 
 **Dashboard path:** `/dashboard-minipanel/lys`
 
@@ -43,7 +43,7 @@ The primary lighting view with scenes, room-level controls, an All Lights shortc
 
 A drill-down page opened from the Lights view. It is not a separate item in the right-side navigation menu.
 
-![MiniPanel All Lights drill-down](screenshots/03-all-lights.jpg)
+![MiniPanel All Lights view](screenshots/03-all-lights.jpg)
 
 ### Climate
 
@@ -81,14 +81,16 @@ Status information for the dishwasher, refrigerator/freezer, and robot vacuum cl
 
 ## Required HACS Custom Cards
 
-- [button-card](https://github.com/iantrich/button-card): Primary card used throughout the dashboard
-- [kiosk-mode](https://github.com/NUCleverHA/kiosk-mode): Hides the Home Assistant header and sidebar
+- [button-card](https://github.com/custom-cards/button-card): Primary card used throughout the dashboard
+- [kiosk-mode](https://github.com/NemesisRE/kiosk-mode): Hides the Home Assistant header and sidebar
 
 ## Installation
 
 ### 1. Install the required HACS components
 
-Install `button-card` and `kiosk-mode` through HACS, then restart Home Assistant if required.
+Install `button-card` and `kiosk-mode` through HACS.
+
+Restart Home Assistant if required.
 
 ### 2. Copy the background image
 
@@ -107,25 +109,51 @@ The image will then be available in Home Assistant as:
 ### 3. Create the dashboard
 
 1. Go to **Settings > Dashboards**
-2. Create a new dashboard
-3. Open the new dashboard
-4. Select **Edit dashboard**
-5. Open the three-dot menu
-6. Select **Raw configuration editor**
-7. Replace the existing content with the contents of `minipanel.json`
-8. Save the dashboard
+2. Click **Add dashboard**
+3. Choose **New dashboard from scratch**
+4. Enter a title, for example `MiniPanel`
+5. Set the URL to exactly:
 
-Direct editing of files inside `/config/.storage/` is not recommended.
+```text
+dashboard-minipanel
+```
 
-### 4. Configure kiosk mode
+6. Create the dashboard
+
+The dashboard URL is important because the navigation buttons use fixed paths such as:
+
+```text
+/dashboard-minipanel/home
+/dashboard-minipanel/lys
+/dashboard-minipanel/klima
+/dashboard-minipanel/musik
+/dashboard-minipanel/status
+```
+
+If you use another dashboard URL, you must replace every `/dashboard-minipanel/` reference in `minipanel.json`.
+
+### 4. Import the dashboard configuration
+
+1. Open the new MiniPanel dashboard
+2. Select **Edit dashboard**
+3. Open the three-dot menu
+4. Select **Raw configuration editor**
+5. Replace the existing content with the contents of `minipanel.json`
+6. Save the dashboard
+
+Do not copy the file directly into `/config/.storage/`. Home Assistant manages that folder internally.
+
+### 5. Configure kiosk mode
 
 The dashboard is configured to hide the interface for the Home Assistant user named `Shelly`.
 
 Edit the `kiosk_mode` section in `minipanel.json` to match the user account used by your wall display.
 
-### 5. Replace the example entities
+### 6. Replace the example entities
 
-The dashboard uses entity IDs from my own Home Assistant installation. Replace them with the corresponding entities from your setup.
+The dashboard uses entity IDs from my own Home Assistant installation.
+
+Replace them with the corresponding entities from your setup.
 
 ## Customization
 
@@ -157,13 +185,45 @@ Replace them with your own Music Assistant or media-control scripts.
 
 ### Background image
 
-Replace `minipanelbackground.png` in `/config/www/` with your own image while keeping the same filename, or update the image path in the dashboard configuration.
+Replace `minipanelbackground.png` in `/config/www/` with your own image while keeping the same filename.
+
+You can also change the image path directly in `minipanel.json`.
+
+### Dashboard paths
+
+The right-side navigation menu uses fixed dashboard paths.
+
+Keep the dashboard URL as:
+
+```text
+dashboard-minipanel
+```
+
+If you change it, update all navigation paths in `minipanel.json`.
 
 ## Notes
 
 - The layout is optimized for the Shelly Wall Display X2i in landscape orientation.
-- Commands such as switching a light are executed immediately. Any visible delay is typically the dashboard waiting for the updated entity state from Home Assistant.
+- It can also run on the older Shelly Wall Display X2, although spacing and scaling may require adjustment.
+- Light commands are executed immediately. Any visible delay normally comes from the dashboard waiting for the updated entity state from Home Assistant.
 - The All Lights page belongs to the Lights section and is not a sixth main navigation view.
+- The screenshots show my own entities, names, temperatures, and media. Your setup will differ after replacing the example entities.
+
+## Repository structure
+
+```text
+MiniPanel/
+├── README.md
+├── minipanel.json
+├── minipanelbackground.png
+└── screenshots/
+    ├── 01-home.jpg
+    ├── 02-lights.jpg
+    ├── 03-all-lights.jpg
+    ├── 04-climate.jpg
+    ├── 05-music.jpg
+    └── 06-status.jpg
+```
 
 ## License
 
