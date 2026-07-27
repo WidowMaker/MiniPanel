@@ -2,17 +2,20 @@
 
 A full-screen Home Assistant dashboard designed for the Shelly Wall Display X2i, the older Shelly Wall Display X2, and other wall-mounted panels running in kiosk mode.
 
-![MiniPanel Home view](screenshots/01-home.jpg)
+![MiniPanel Home view](screenshots/Home2.jpg)
 
 ## Features
 
 - **Full-screen panel layout** with a custom background image
 - **Kiosk mode** that hides the Home Assistant header and sidebar
-- **5 main views**: Home, Lys (Lights), Klima (Climate), Musik (Music), and Status
+- **6 main views**: Home, Lys (Lights), Klima (Climate), Musik (Music), Status, and Vejr (Weather)
 - **Real-time clock and weather** on the Home view
 - **Family presence** indicators with avatar photos
-- **Dishwasher status** shown only when a program is running
+- **Robot vacuum** quick-start/stop button with live status on Home view
+- **Dishwasher status** pill shown only when a program is running
+- **Vacuum status** pill shown only when the vacuum is running
 - **Mini music player** with playback controls on the Home view
+- **Weather forecast** view with multi-day forecast
 - **Fixed navigation menu** with active-state highlighting
 - **Lights view** with scenes, room controls, and a master switch
 - **All Lights drill-down** with controls for every configured light group
@@ -25,11 +28,11 @@ A full-screen Home Assistant dashboard designed for the Shelly Wall Display X2i,
 
 ### Home
 
-Main overview with clock, weather, family presence, mini media controls, and the fixed navigation menu.
+Main overview with clock, weather, family presence, robot vacuum button, dishwasher/vacuum status pills, mini media controls, and the fixed navigation menu.
 
 **Dashboard path:** `/dashboard-minipanel/home`
 
-![MiniPanel Home view](screenshots/01-home.jpg)
+![MiniPanel Home view](screenshots/Home2.jpg)
 
 ### Lights
 
@@ -69,15 +72,22 @@ Status information for the dishwasher, refrigerator/freezer, and robot vacuum cl
 
 ![MiniPanel Status view](screenshots/06-status.jpg)
 
-## Views
+### Weather
+
+Multi-day weather forecast with back navigation.
+
+**Dashboard path:** `/dashboard-minipanel/vejr`
+
+### Views
 
 | View | Path | Description |
 |------|------|-------------|
-| Home | `/dashboard-minipanel/home` | Clock, weather, family presence, mini player, and navigation |
+| Home | `/dashboard-minipanel/home` | Clock, weather, family, vacuum, dishwasher, mini player, and navigation |
 | Lys | `/dashboard-minipanel/lys` | Scenes, room controls, All Lights drill-down, and master switch |
 | Klima | `/dashboard-minipanel/klima` | Climate controls and presets |
 | Musik | `/dashboard-minipanel/musik` | Playlists, volume, and full music player |
 | Status | `/dashboard-minipanel/status` | Appliance and system status |
+| Vejr | `/dashboard-minipanel/vejr` | Multi-day weather forecast |
 
 ## Required HACS Custom Cards
 
@@ -128,6 +138,7 @@ The dashboard URL is important because the navigation buttons use fixed paths su
 /dashboard-minipanel/klima
 /dashboard-minipanel/musik
 /dashboard-minipanel/status
+/dashboard-minipanel/vejr
 ```
 
 If you use another dashboard URL, you must replace every `/dashboard-minipanel/` reference in `minipanel.json`.
@@ -172,6 +183,8 @@ Replace them with the corresponding entities from your setup.
 | `weather.forecast_home` | Weather entity |
 | `person.*` or `device_tracker.*` | Presence entities |
 | `sensor.opvaskemaskine_current_program_remaining_time` | Dishwasher remaining-time sensor |
+| `vacuum.eufy_robovac_s1_pro` | Robot vacuum entity |
+| `sensor.running_status` | Vacuum running-status sensor |
 
 ### Scripts
 
@@ -222,7 +235,8 @@ MiniPanel/
     ├── 03-all-lights.jpg
     ├── 04-climate.jpg
     ├── 05-music.jpg
-    └── 06-status.jpg
+    ├── 06-status.jpg
+    └── Home2.jpg
 ```
 
 ## License
