@@ -1,0 +1,223 @@
+- id: '1709156009036'
+  alias: Caroline Hue Dimmer Remote With Hold
+  description: ''
+  use_blueprint:
+    path: lksnyder0/hue-remote-dimmer-january-2022.yaml
+    input:
+      dimmer_device: 9d63dabade6409eb88c3211d09a8dbc1
+      on_short_action:
+      - service: light.turn_on
+        metadata: {}
+        data:
+          color_temp: 372
+          brightness_pct: 48
+          transition: 4
+        target:
+          area_id: caroline
+      off_short_action:
+      - service: light.turn_off
+        metadata: {}
+        data:
+          transition: 4
+        target:
+          area_id: caroline
+      brightness_up_short_action:
+      - service: light.turn_on
+        metadata: {}
+        data:
+          brightness_step_pct: 10
+        target:
+          area_id: caroline
+      brightness_down_short_action:
+      - service: light.turn_on
+        metadata: {}
+        data:
+          brightness_step_pct: -10
+        target:
+          area_id: caroline
+      on_long_action: []
+      off_long_action:
+      - type: turn_off
+        device_id: d6a532a5210b8f81180939e7bf48f6dc
+        entity_id: abebec1d68cabdc44122b2eb775d6d55
+        domain: light
+- id: '1719053289656'
+  alias: Garderobe Lys
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.sovevaerelse_sensor_motion
+      light_target:
+        area_id: garderobe
+      no_motion_wait: 60
+- id: '1765898950627'
+  alias: Kontor Lys Bevægelse
+  description: ''
+  use_blueprint:
+    path: Blackshome/sensor-light.yaml
+    input:
+      motion_trigger:
+      - binary_sensor.kontor_emotion_max_e04b4100be35_zone_1
+      light_switch:
+        entity_id:
+        - light.wiz_rgbww_tunable_91aec7
+        - light.glorb_2
+        - switch.osram_plug_01
+        - light.3dprint
+      time_delay: 1
+      dynamic_lighting_time_start_morning: 05:30:00
+      dynamic_lighting_time_end_morning: 08:30:00
+      dynamic_lighting_max_brightness: 99
+      dynamic_lighting_min_brightness: 52
+      dynamic_lighting_time_start_evening: 08:31:00
+      dynamic_lighting_time_end_evening: 05:29:00
+      include_night_lights: night_lights_enabled
+      night_lights_entity_state:
+      - binary_sensor.lnlinkha_e04b4100be350000000000009eac0000_2
+      night_lights_after_time: 05:30:00
+      night_lights_before_time: 08:30:00
+      night_lights:
+        entity_id:
+        - light.wiz_rgbww_tunable_91aec7
+        - light.glorb_2
+        - switch.osram_plug_01
+        - light.3dprint
+      night_lights_conditions:
+      - time_enabled
+      - entity_state_enabled
+      include_night_light_control:
+      - use_brightness
+      - if_lights_are_on_adjust_when_crossing_over
+      - use_transition
+      night_light_brightness: 25
+      include_light_control:
+      - use_brightness
+      light_brightness: 76
+      night_time_delay: 1
+- id: '1766422834220'
+  alias: Jul_Stue
+  description: ''
+  triggers:
+  - trigger: webhook
+    allowed_methods:
+    - POST
+    - PUT
+    - GET
+    local_only: true
+    webhook_id: jul_stue
+  conditions: []
+  actions:
+  - action: script.julemusik
+    metadata: {}
+    data: {}
+  mode: single
+- id: '1778880405121'
+  alias: Køleskabslys
+  description: ''
+  use_blueprint:
+    path: Blackshome/sensor-light.yaml
+    input:
+      motion_trigger:
+      - binary_sensor.kole_fryseskab_koleskabsdor
+      include_night_lights: night_lights_enabled
+      night_lights_before_time: 08:00:00
+      night_lights:
+        entity_id: light.kole_fryseskab_internal_light
+      include_night_light_control:
+      - use_brightness
+      - if_lights_are_on_adjust_when_crossing_over
+      night_light_brightness: 20
+      include_light_control:
+      - use_brightness
+      light_switch:
+        entity_id: light.kole_fryseskab_internal_light
+      night_lights_conditions:
+      - time_enabled
+      - entity_state_enabled
+      night_lights_after_time: '23:00:00'
+      night_light_transition_on: 0
+      night_light_transition_off: 0
+      include_night_glow: night_glow_enabled
+      night_time_delay: 0
+- id: '1781095732792'
+  alias: Badeværelse dæmper styrer pendel
+  description: Gang 1 følger Nordtronic dæmperens tænd/sluk og lysstyrke
+  triggers:
+  - entity_id: light.nordtronic_a_s_rotdimz_98424072
+    trigger: state
+  actions:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: light.nordtronic_a_s_rotdimz_98424072
+        state: 'off'
+      sequence:
+      - target:
+          entity_id: light.gang_1
+        action: light.turn_off
+    - conditions:
+      - condition: state
+        entity_id: light.nordtronic_a_s_rotdimz_98424072
+        state: 'on'
+      sequence:
+      - target:
+          entity_id: light.gang_1
+        data:
+          brightness: '{{ state_attr(''light.nordtronic_a_s_rotdimz_98424072'', ''brightness'')
+            | int(190) }}
+
+            '
+        action: light.turn_on
+  mode: restart
+- id: '1781096659923'
+  alias: Begræns Nordtronic dæmper til 75 procent
+  description: Sætter Nordtronic dæmper tilbage til max 75 procent hvis den drejes
+    højere
+  triggers:
+  - entity_id: light.nordtronic_a_s_rotdimz_98424072
+    attribute: brightness
+    trigger: state
+  conditions:
+  - condition: numeric_state
+    entity_id: light.nordtronic_a_s_rotdimz_98424072
+    attribute: brightness
+    above: 190
+  actions:
+  - target:
+      entity_id: light.nordtronic_a_s_rotdimz_98424072
+    data:
+      brightness: 190
+    action: light.turn_on
+  mode: restart
+- id: '1781096834345'
+  alias: Badeværelse dæmper styrer pendel plus 25 procent
+  description: Gang 1 følger Nordtronic dæmperen, men ligger 25 procentpoint højere
+  triggers:
+  - entity_id: light.nordtronic_a_s_rotdimz_98424072
+    trigger: state
+  actions:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: light.nordtronic_a_s_rotdimz_98424072
+        state: 'off'
+      sequence:
+      - target:
+          entity_id: light.gang_1
+        action: light.turn_off
+    - conditions:
+      - condition: state
+        entity_id: light.nordtronic_a_s_rotdimz_98424072
+        state: 'on'
+      sequence:
+      - variables:
+          dimmer_brightness: '{{ state_attr(''light.nordtronic_a_s_rotdimz_98424072'',
+            ''brightness'') | int(0) }}'
+          pendel_brightness: '{{ [dimmer_brightness + 64, 254] | min }}'
+      - target:
+          entity_id: light.gang_1
+        data:
+          brightness: '{{ pendel_brightness }}'
+        action: light.turn_on
+  mode: restart

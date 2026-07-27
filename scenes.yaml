@@ -1,0 +1,562 @@
+- id: '1766521479058'
+  name: Kontor Morgen
+  entities:
+    light.wiz_rgbww_tunable_91aec7:
+      min_color_temp_kelvin: 2200
+      max_color_temp_kelvin: 6500
+      effect_list:
+      - Alarm
+      - Bedtime
+      - Candlelight
+      - Christmas
+      - Cozy
+      - Cool white
+      - Daylight
+      - Diwali
+      - Deep dive
+      - Fall
+      - Fireplace
+      - Forest
+      - Focus
+      - Golden white
+      - Halloween
+      - Jungle
+      - Mojito
+      - Night light
+      - Ocean
+      - Party
+      - Pulse
+      - Pastel colors
+      - Plantgrowth
+      - Romance
+      - Relax
+      - Sunset
+      - Spring
+      - Summer
+      - Steampunk
+      - True colors
+      - TV time
+      - White
+      - Wake-up
+      - Warm white
+      - Rhythm
+      supported_color_modes:
+      - color_temp
+      - rgbww
+      effect:
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      hs_color:
+      rgb_color:
+      xy_color:
+      rgbww_color:
+      icon: mdi:alarm-light
+      friendly_name: Kontor Bord
+      supported_features: 4
+      state: 'off'
+    light.glorb_2:
+      effect_list:
+      - Solid
+      - Blink
+      - Breathe
+      - Wipe
+      - Wipe Random
+      - Random Colors
+      - Sweep
+      - Dynamic
+      - Colorloop - Legacy
+      - Rainbow
+      - Scan
+      - Scan Dual
+      - Fade
+      - Theater
+      - Theater Rainbow
+      - Running - Legacy
+      - Saw
+      - Twinkle
+      - Dissolve
+      - Dissolve Rnd
+      - Sparkle
+      - Sparkle Dark
+      - Sparkle+
+      - Strobe
+      - Strobe Rainbow
+      - Strobe Mega
+      - Blink Rainbow
+      - Android
+      - Chase
+      - Chase Random
+      - Chase Rainbow
+      - Chase Flash
+      - Chase Flash Rnd
+      - Rainbow Runner
+      - Colorful
+      - Traffic Light
+      - Sweep Random
+      - Chase 2
+      - Aurora
+      - Stream
+      - Scanner
+      - Lighthouse
+      - Fireworks
+      - Rain
+      - Tetrix
+      - Fire Flicker
+      - Gradient
+      - Loading
+      - Rolling Balls
+      - Fairy
+      - Two Dots
+      - Fairytwinkle
+      - Running Dual
+      - Chase 3
+      - Tri Wipe
+      - Tri Fade
+      - Lightning
+      - ICU
+      - Multi Comet
+      - Scanner Dual
+      - Stream 2
+      - Oscillate
+      - Pride 2015
+      - Juggle
+      - Palette
+      - Fire 2012
+      - Colorwaves - Legacy
+      - Bpm
+      - Fill Noise
+      - Noise 1
+      - Noise 2
+      - Noise 3
+      - Noise 4
+      - Colortwinkles
+      - Lake
+      - Meteor
+      - Meteor Smooth
+      - Railway
+      - Ripple
+      - Twinklefox
+      - Twinklecat
+      - Halloween Eyes
+      - Solid Pattern
+      - Solid Pattern Tri
+      - Spots
+      - Spots Fade
+      - Glitter
+      - Candle
+      - Fireworks Starburst
+      - Fireworks 1D
+      - Bouncing Balls
+      - Sinelon
+      - Sinelon Dual
+      - Sinelon Rainbow
+      - Popcorn
+      - Drip
+      - Plasma
+      - Percent
+      - Ripple Rainbow
+      - Heartbeat
+      - Pacifica
+      - Candle Multi
+      - Solid Glitter
+      - Sunrise
+      - Phased
+      - Twinkleup
+      - Noise Pal
+      - Sine
+      - Phased Noise
+      - Flow
+      - Chunchun
+      - Dancing Shadows
+      - Washing Machine
+      - Blends
+      - TV Simulator
+      - Dynamic Smooth
+      - Spaceships
+      - Crazy Bees
+      - Ghost Rider
+      - Blobs
+      - Scrolling Text
+      - Drift Rose
+      - Distortion Waves
+      - Soap
+      - Octopus
+      - Waving Cell
+      - Pixels
+      - Pixelwave
+      - Juggles
+      - Matripix
+      - Gravimeter
+      - Plasmoid
+      - Puddles
+      - Midnoise
+      - Noisemeter
+      - Freqwave
+      - Freqmatrix
+      - GEQ
+      - Waterfall
+      - Freqpixels
+      - Noisefire
+      - Puddlepeak
+      - Noisemove
+      - Noise2D
+      - Perlin Move
+      - Ripple Peak
+      - Firenoise
+      - Squared Swirl
+      - DNA
+      - Matrix
+      - Metaballs
+      - Freqmap
+      - Gravcenter
+      - Gravcentric
+      - Gravfreq
+      - DJ Light
+      - Funky Plank
+      - Pulser
+      - Blurz
+      - Drift
+      - Waverly
+      - Sun Radiation
+      - Colored Bursts
+      - Julia
+      - Game Of Life
+      - Tartan - Legacy
+      - Polar Lights
+      - Swirl - Legacy
+      - Lissajous
+      - Frizzles - Legacy
+      - Plasma Ball
+      - Flow Stripe
+      - Hiphotic - Legacy
+      - Sindots
+      - DNA Spiral
+      - Black Hole - Legacy
+      - Wavesins
+      - Rocktaves
+      - Akemi
+      - Solid
+      - Colorloop
+      - Colorwaves
+      - Running
+      - Frizzles
+      - Black Hole
+      - Hiphotic
+      - Swirl
+      - Tartan
+      - Wave
+      supported_color_modes:
+      - rgb
+      effect:
+      color_mode:
+      brightness:
+      hs_color:
+      rgb_color:
+      xy_color:
+      friendly_name: GLORB
+      supported_features: 36
+      state: 'off'
+    select.glorb_playlist_2:
+      options: []
+      friendly_name: GLORB Playlist
+      state: unavailable
+    select.glorb_preset_2:
+      options:
+      - Black Hole - Sunset
+      - Black Hole - Tertiary
+      - Colorwaves - Analogous
+      - Colorwaves - Sunset
+      - Frizzles - Analogous
+      - Frizzles - Fire
+      - Hiphotic - Fire
+      - Hiphotic - Tertiary
+      - Running - Analogous
+      - Running - Atlantica
+      - Tartan - Analogous
+      - Tartan - Fairy Reaf
+      friendly_name: GLORB Preset
+      state: unknown
+  icon: mdi:alarm-light-outline
+  metadata: {}
+- id: '1766521539759'
+  name: Kontor Aften
+  entities:
+    light.wiz_rgbww_tunable_91aec7:
+      min_color_temp_kelvin: 2200
+      max_color_temp_kelvin: 6500
+      effect_list:
+      - Alarm
+      - Bedtime
+      - Candlelight
+      - Christmas
+      - Cozy
+      - Cool white
+      - Daylight
+      - Diwali
+      - Deep dive
+      - Fall
+      - Fireplace
+      - Forest
+      - Focus
+      - Golden white
+      - Halloween
+      - Jungle
+      - Mojito
+      - Night light
+      - Ocean
+      - Party
+      - Pulse
+      - Pastel colors
+      - Plantgrowth
+      - Romance
+      - Relax
+      - Sunset
+      - Spring
+      - Summer
+      - Steampunk
+      - True colors
+      - TV time
+      - White
+      - Wake-up
+      - Warm white
+      - Rhythm
+      supported_color_modes:
+      - color_temp
+      - rgbww
+      effect:
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      hs_color:
+      rgb_color:
+      xy_color:
+      rgbww_color:
+      icon: mdi:alarm-light
+      friendly_name: Kontor Bord
+      supported_features: 4
+      state: 'off'
+    light.glorb_2:
+      effect_list:
+      - Solid
+      - Blink
+      - Breathe
+      - Wipe
+      - Wipe Random
+      - Random Colors
+      - Sweep
+      - Dynamic
+      - Colorloop - Legacy
+      - Rainbow
+      - Scan
+      - Scan Dual
+      - Fade
+      - Theater
+      - Theater Rainbow
+      - Running - Legacy
+      - Saw
+      - Twinkle
+      - Dissolve
+      - Dissolve Rnd
+      - Sparkle
+      - Sparkle Dark
+      - Sparkle+
+      - Strobe
+      - Strobe Rainbow
+      - Strobe Mega
+      - Blink Rainbow
+      - Android
+      - Chase
+      - Chase Random
+      - Chase Rainbow
+      - Chase Flash
+      - Chase Flash Rnd
+      - Rainbow Runner
+      - Colorful
+      - Traffic Light
+      - Sweep Random
+      - Chase 2
+      - Aurora
+      - Stream
+      - Scanner
+      - Lighthouse
+      - Fireworks
+      - Rain
+      - Tetrix
+      - Fire Flicker
+      - Gradient
+      - Loading
+      - Rolling Balls
+      - Fairy
+      - Two Dots
+      - Fairytwinkle
+      - Running Dual
+      - Chase 3
+      - Tri Wipe
+      - Tri Fade
+      - Lightning
+      - ICU
+      - Multi Comet
+      - Scanner Dual
+      - Stream 2
+      - Oscillate
+      - Pride 2015
+      - Juggle
+      - Palette
+      - Fire 2012
+      - Colorwaves - Legacy
+      - Bpm
+      - Fill Noise
+      - Noise 1
+      - Noise 2
+      - Noise 3
+      - Noise 4
+      - Colortwinkles
+      - Lake
+      - Meteor
+      - Meteor Smooth
+      - Railway
+      - Ripple
+      - Twinklefox
+      - Twinklecat
+      - Halloween Eyes
+      - Solid Pattern
+      - Solid Pattern Tri
+      - Spots
+      - Spots Fade
+      - Glitter
+      - Candle
+      - Fireworks Starburst
+      - Fireworks 1D
+      - Bouncing Balls
+      - Sinelon
+      - Sinelon Dual
+      - Sinelon Rainbow
+      - Popcorn
+      - Drip
+      - Plasma
+      - Percent
+      - Ripple Rainbow
+      - Heartbeat
+      - Pacifica
+      - Candle Multi
+      - Solid Glitter
+      - Sunrise
+      - Phased
+      - Twinkleup
+      - Noise Pal
+      - Sine
+      - Phased Noise
+      - Flow
+      - Chunchun
+      - Dancing Shadows
+      - Washing Machine
+      - Blends
+      - TV Simulator
+      - Dynamic Smooth
+      - Spaceships
+      - Crazy Bees
+      - Ghost Rider
+      - Blobs
+      - Scrolling Text
+      - Drift Rose
+      - Distortion Waves
+      - Soap
+      - Octopus
+      - Waving Cell
+      - Pixels
+      - Pixelwave
+      - Juggles
+      - Matripix
+      - Gravimeter
+      - Plasmoid
+      - Puddles
+      - Midnoise
+      - Noisemeter
+      - Freqwave
+      - Freqmatrix
+      - GEQ
+      - Waterfall
+      - Freqpixels
+      - Noisefire
+      - Puddlepeak
+      - Noisemove
+      - Noise2D
+      - Perlin Move
+      - Ripple Peak
+      - Firenoise
+      - Squared Swirl
+      - DNA
+      - Matrix
+      - Metaballs
+      - Freqmap
+      - Gravcenter
+      - Gravcentric
+      - Gravfreq
+      - DJ Light
+      - Funky Plank
+      - Pulser
+      - Blurz
+      - Drift
+      - Waverly
+      - Sun Radiation
+      - Colored Bursts
+      - Julia
+      - Game Of Life
+      - Tartan - Legacy
+      - Polar Lights
+      - Swirl - Legacy
+      - Lissajous
+      - Frizzles - Legacy
+      - Plasma Ball
+      - Flow Stripe
+      - Hiphotic - Legacy
+      - Sindots
+      - DNA Spiral
+      - Black Hole - Legacy
+      - Wavesins
+      - Rocktaves
+      - Akemi
+      - Solid
+      - Colorloop
+      - Colorwaves
+      - Running
+      - Frizzles
+      - Black Hole
+      - Hiphotic
+      - Swirl
+      - Tartan
+      - Wave
+      supported_color_modes:
+      - rgb
+      effect:
+      color_mode:
+      brightness:
+      hs_color:
+      rgb_color:
+      xy_color:
+      friendly_name: GLORB
+      supported_features: 36
+      state: 'off'
+    select.glorb_playlist_2:
+      options: []
+      friendly_name: GLORB Playlist
+      state: unavailable
+    select.glorb_preset_2:
+      options:
+      - Black Hole - Sunset
+      - Black Hole - Tertiary
+      - Colorwaves - Analogous
+      - Colorwaves - Sunset
+      - Frizzles - Analogous
+      - Frizzles - Fire
+      - Hiphotic - Fire
+      - Hiphotic - Tertiary
+      - Running - Analogous
+      - Running - Atlantica
+      - Tartan - Analogous
+      - Tartan - Fairy Reaf
+      friendly_name: GLORB Preset
+      state: unknown
+  icon: mdi:alarm-light-outline
+  metadata: {}

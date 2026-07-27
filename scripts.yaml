@@ -1,0 +1,202 @@
+toggle_stue:
+  alias: Toggle Stue
+  sequence:
+  - action: light.toggle
+    metadata: {}
+    data: {}
+    target:
+      area_id: stue
+  description: ''
+  icon: mdi:alarm-light
+nyt_script:
+  alias: Sluk alt lys
+  sequence:
+  - action: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      floor_id:
+      - nedenunder
+      - ovenpa
+  description: ''
+  icon: mdi:alarm-light-off
+toggle_sovevarelse:
+  alias: Toggle Soveværelse
+  sequence:
+  - action: light.toggle
+    metadata: {}
+    data: {}
+    target:
+      area_id: sovevaerelse
+  description: ''
+  icon: mdi:alarm-light
+toggle_kokken:
+  alias: Toggle Køkken
+  sequence:
+  - action: light.toggle
+    metadata: {}
+    data: {}
+    target:
+      area_id: kokken
+  description: ''
+  icon: mdi:alarm-light
+toggle_kontor:
+  alias: Toggle Kontor
+  sequence:
+  - action: light.toggle
+    metadata: {}
+    data: {}
+    target:
+      area_id: kontor
+  description: ''
+  icon: mdi:alarm-light
+julemusik:
+  sequence:
+  - action: media_player.play_media
+    metadata: {}
+    target:
+      device_id:
+      - 8d546d8f99c66ec1bbbcea5ed2b5a376
+      - 9888636d1794b3389d26384fea9d4a3d
+    data:
+      media:
+        media_content_id: FV:2/3
+        media_content_type: favorite_item_id
+        metadata:
+          title: "JULEMUSIK 2025 \U0001F384 Julesange alle kender - De originale favoritter
+            til jul"
+          thumbnail: https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da8488b0ea7cf23f26ab9bc244fb
+          media_class: playlist
+          children_media_class:
+          navigateIds:
+          - {}
+          - media_content_type: favorites
+            media_content_id: ''
+          - media_content_type: favorites_folder
+            media_content_id: object.container.playlistContainer
+          browse_entity_id: media_player.badevaerelse
+  - action: media_player.volume_set
+    metadata: {}
+    data:
+      volume_level: 0.25
+    target:
+      device_id:
+      - 8d546d8f99c66ec1bbbcea5ed2b5a376
+      - 9888636d1794b3389d26384fea9d4a3d
+  alias: JuleMusik
+  description: ''
+brian_spotify:
+  alias: Brian Spotify
+  sequence:
+  - action: media_player.play_media
+    data:
+      media:
+        media_content_id: spotify:playlist:37i9dQZF1E37EW5LJAkmCm
+        media_content_type: playlist
+        metadata:
+          navigateIds:
+          - {}
+          - media_content_type: ''
+            media_content_id: __MANUAL_ENTRY__
+          browse_entity_id: media_player.kokken_hub
+    target:
+      entity_id: media_player.kokken_hub
+  mode: single
+  description: ''
+'1783163503917':
+  alias: Brians Mix
+  sequence:
+  - action: media_player.play_media
+    target:
+      entity_id: media_player.kokken_hub_2
+    data:
+      media:
+        media_content_id: Brians Mix
+        media_content_type: playlist
+  mode: single
+  description: ''
+gods_of_metal:
+  sequence:
+  - action: media_player.play_media
+    target:
+      entity_id: media_player.kokken_hub_2
+    data:
+      media:
+        media_content_id: Gods of Metal
+        media_content_type: playlist
+  alias: 'Gods of Metal '
+  mode: single
+  description: ''
+musik_liked_songs_pa_kokken_hub:
+  alias: Musik - Test playlist på Køkken Hub
+  sequence:
+  - action: media_player.select_source
+    target:
+      entity_id: media_player.spotify_iben
+    data:
+      source: Web Player (Chrome)
+  - action: media_player.play_media
+    target:
+      entity_id:
+      - media_player.spotify_iben
+      - media_player.kokken_hub_2
+    data:
+      media:
+        media_content_id: spotify:playlist:6ZT1wLfQMoBlx0iUmu3Kci
+        media_content_type: playlist
+        metadata: {}
+  mode: single
+  icon: mdi:spotify
+lys_aften:
+  alias: Lys - Aften
+  description: Hyggebelysning for alt lys i Lys-viewet
+  icon: mdi:weather-sunset
+  sequence:
+  - action: light.turn_on
+    target:
+      entity_id:
+      - light.stue_lights
+      - light.kokken_lights
+      - light.kokken_lys_niche
+      - light.kokken_kokken_daemper
+      - light.overskabe
+      - light.hylder
+    data:
+      brightness: 100
+      color_temp_kelvin: 2700
+  mode: single
+lys_rengoring:
+  alias: Lys - Rengøring
+  description: Fuld lys til rengøring for alt lys i Lys-viewet
+  icon: mdi:broom
+  sequence:
+  - action: light.turn_on
+    target:
+      entity_id:
+      - light.stue_lights
+      - light.kokken_lights
+      - light.kokken_lys_niche
+      - light.kokken_kokken_daemper
+      - light.overskabe
+      - light.hylder
+    data:
+      brightness: 255
+      color_temp_kelvin: 4000
+  mode: single
+lys_madlavning:
+  alias: Lys - Madlavning
+  description: Madbelysning til køkken, spisebord, overskabe, hylder og kaffeniche
+  icon: mdi:pot-steam-outline
+  sequence:
+  - action: light.turn_on
+    target:
+      entity_id:
+      - light.kokken_lights
+      - light.kokken_kokken_daemper
+      - light.overskabe
+      - light.hylder
+      - light.kokken_lys_niche
+    data:
+      brightness: 200
+      color_temp_kelvin: 3000
+  mode: single
