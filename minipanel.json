@@ -6508,6 +6508,1215 @@
       "panel": true,
       "path": "status",
       "title": "Status"
+    },
+    {
+      "cards": [
+        {
+          "custom_fields": {
+            "idle_return": "[[[\n  if (!window.minipanelIdleReturnInstalled) {\n    window.minipanelIdleReturnInstalled = true;\n    const timeout = 60000;\n    const returnPath = '/dashboard-minipanel/home';\n    let timer;\n    const resetTimer = () => {\n      clearTimeout(timer);\n      timer = setTimeout(() => {\n        const path = window.location.pathname;\n        const search = window.location.search || '';\n        if (\n          path.startsWith('/dashboard-minipanel') &&\n          !search.includes('disable_km') &&\n          path !== '/dashboard-minipanel/home'\n        ) {\n          history.pushState(null, '', returnPath);\n          window.dispatchEvent(new Event('location-changed'));\n        }\n      }, timeout);\n    };\n    ['click', 'touchstart', 'mousemove', 'keydown'].forEach(eventName => {\n      document.addEventListener(eventName, resetTimer, true);\n    });\n    resetTimer();\n  }\n  return '';\n]]]",
+            "lights": {
+              "card": {
+                "cards": [
+                  {
+                    "custom_fields": {
+                      "main": "[[[\n  const expand = (id, seen = new Set()) => {\n    if (seen.has(id)) return [];\n    seen.add(id);\n    const s = states[id];\n    if (!s) return [];\n    const m = s.attributes?.entity_id;\n    if (Array.isArray(m) && m.length > 0) return m.flatMap(mid => expand(mid, seen));\n    return [id];\n  };\n  const entityId = 'light.kontor_lights';\n  const e = states[entityId];\n  if (!e) return `<div class=\"light-head\"><div class=\"light-icon\"><ha-icon icon=\"mdi:desktop-tower\"></ha-icon></div><div><div class=\"light-name\">Kontor</div><div class=\"light-state\">Entity mangler</div></div></div>`;\n  const members = expand(entityId);\n  const total = members.length || 1;\n  const onCount = members.filter(id => states[id]?.state === 'on').length;\n  const on = onCount > 0;\n  let status = 'Slukket';\n  if (on) status = total > 1 ? `${onCount} af ${total} tændt` : 'Tændt';\n  return `<div class=\"light-head\"><div class=\"light-icon ${on ? 'on' : ''}\"><ha-icon icon=\"mdi:desktop-tower\"></ha-icon></div><div><div class=\"light-name\">Kontor</div><div class=\"light-state\">${status}</div></div></div>`;\n]]]",
+                      "switch": "[[[\n  const on = states['light.kontor_lights']?.state === 'on';\n  return `<div class=\"light-toggle ${on ? 'on' : 'off'}\"><div class=\"light-toggle-knob\"></div></div>`;\n]]]"
+                    },
+                    "entity": "light.kontor_lights",
+                    "extra_styles": ".light-head{display:flex;align-items:center;gap:12px}\n.light-icon{width:42px;height:42px;border-radius:16px;display:flex;align-items:center;justify-content:center;color:rgba(244,246,242,0.72)}\n.light-icon.on{color:#FFE65A}\n.light-icon ha-icon{width:30px;height:30px}\n.light-name{text-align:left;color:#F4F6F2;font-size:15px;font-weight:850;line-height:1.1}\n.light-state{text-align:left;margin-top:4px;color:rgba(244,246,242,0.70);font-size:11px;font-weight:700;white-space:nowrap}\n.light-toggle{width:56px;height:30px;border-radius:999px;position:relative;background:rgba(130,135,145,0.45);box-shadow:inset 0 1px 2px rgba(0,0,0,0.24)}\n.light-toggle.on{background:linear-gradient(90deg,#FFB03A,#FFE65A)}\n.light-toggle-knob{position:absolute;width:26px;height:26px;top:2px;left:2px;border-radius:50%;background:#F4F6F2;box-shadow:0 2px 5px rgba(0,0,0,0.28);transition:left 0.18s ease}\n.light-toggle.on .light-toggle-knob{left:28px}\n",
+                    "hold_action": {
+                      "action": "more-info"
+                    },
+                    "show_icon": false,
+                    "show_name": false,
+                    "show_state": false,
+                    "styles": {
+                      "card": [
+                        {
+                          "height": "114px"
+                        },
+                        {
+                          "border-radius": "22px"
+                        },
+                        {
+                          "padding": "10px"
+                        },
+                        {
+                          "background": "[[[return states['light.kontor_lights']?.state === 'on' ? 'rgba(96, 56, 46, 0.78)' : 'rgba(18, 21, 30, 0.68)';]]]"
+                        },
+                        {
+                          "border": "[[[return states['light.kontor_lights']?.state === 'on' ? '1px solid rgba(255, 176, 58, 0.82)' : '1px solid rgba(247, 248, 244, 0.10)';]]]"
+                        },
+                        {
+                          "box-shadow": "0 6px 14px rgba(0, 0, 0, 0.22)"
+                        }
+                      ],
+                      "custom_fields": {
+                        "main": [
+                          {
+                            "grid-area": "main"
+                          },
+                          {
+                            "width": "100%"
+                          },
+                          {
+                            "align-self": "center"
+                          }
+                        ],
+                        "switch": [
+                          {
+                            "grid-area": "switch"
+                          },
+                          {
+                            "justify-self": "end"
+                          },
+                          {
+                            "align-self": "center"
+                          }
+                        ]
+                      },
+                      "grid": [
+                        {
+                          "display": "grid"
+                        },
+                        {
+                          "grid-template-areas": "\"main switch\""
+                        },
+                        {
+                          "grid-template-columns": "1fr 62px"
+                        },
+                        {
+                          "grid-template-rows": "1fr"
+                        }
+                      ]
+                    },
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "triggers_update": [
+                      "light.kontor_lights"
+                    ],
+                    "type": "custom:button-card"
+                  },
+                  {
+                    "custom_fields": {
+                      "main": "[[[\n  const expand = (id, seen = new Set()) => {\n    if (seen.has(id)) return [];\n    seen.add(id);\n    const s = states[id];\n    if (!s) return [];\n    const m = s.attributes?.entity_id;\n    if (Array.isArray(m) && m.length > 0) return m.flatMap(mid => expand(mid, seen));\n    return [id];\n  };\n  const entityId = 'light.badevaerelse_light';\n  const e = states[entityId];\n  if (!e) return `<div class=\"light-head\"><div class=\"light-icon\"><ha-icon icon=\"mdi:shower\"></ha-icon></div><div><div class=\"light-name\">Badeværelse</div><div class=\"light-state\">Entity mangler</div></div></div>`;\n  const members = expand(entityId);\n  const total = members.length || 1;\n  const onCount = members.filter(id => states[id]?.state === 'on').length;\n  const on = onCount > 0;\n  let status = 'Slukket';\n  if (on) status = total > 1 ? `${onCount} af ${total} tændt` : 'Tændt';\n  return `<div class=\"light-head\"><div class=\"light-icon ${on ? 'on' : ''}\"><ha-icon icon=\"mdi:shower\"></ha-icon></div><div><div class=\"light-name\">Badeværelse</div><div class=\"light-state\">${status}</div></div></div>`;\n]]]",
+                      "switch": "[[[\n  const on = states['light.badevaerelse_light']?.state === 'on';\n  return `<div class=\"light-toggle ${on ? 'on' : 'off'}\"><div class=\"light-toggle-knob\"></div></div>`;\n]]]"
+                    },
+                    "entity": "light.badevaerelse_light",
+                    "extra_styles": ".light-head{display:flex;align-items:center;gap:12px}\n.light-icon{width:42px;height:42px;border-radius:16px;display:flex;align-items:center;justify-content:center;color:rgba(244,246,242,0.72)}\n.light-icon.on{color:#FFE65A}\n.light-icon ha-icon{width:30px;height:30px}\n.light-name{text-align:left;color:#F4F6F2;font-size:15px;font-weight:850;line-height:1.1}\n.light-state{text-align:left;margin-top:4px;color:rgba(244,246,242,0.70);font-size:11px;font-weight:700;white-space:nowrap}\n.light-toggle{width:56px;height:30px;border-radius:999px;position:relative;background:rgba(130,135,145,0.45);box-shadow:inset 0 1px 2px rgba(0,0,0,0.24)}\n.light-toggle.on{background:linear-gradient(90deg,#FFB03A,#FFE65A)}\n.light-toggle-knob{position:absolute;width:26px;height:26px;top:2px;left:2px;border-radius:50%;background:#F4F6F2;box-shadow:0 2px 5px rgba(0,0,0,0.28);transition:left 0.18s ease}\n.light-toggle.on .light-toggle-knob{left:28px}\n",
+                    "hold_action": {
+                      "action": "more-info"
+                    },
+                    "show_icon": false,
+                    "show_name": false,
+                    "show_state": false,
+                    "styles": {
+                      "card": [
+                        {
+                          "height": "114px"
+                        },
+                        {
+                          "border-radius": "22px"
+                        },
+                        {
+                          "padding": "10px"
+                        },
+                        {
+                          "background": "[[[return states['light.badevaerelse_light']?.state === 'on' ? 'rgba(96, 56, 46, 0.78)' : 'rgba(18, 21, 30, 0.68)';]]]"
+                        },
+                        {
+                          "border": "[[[return states['light.badevaerelse_light']?.state === 'on' ? '1px solid rgba(255, 176, 58, 0.82)' : '1px solid rgba(247, 248, 244, 0.10)';]]]"
+                        },
+                        {
+                          "box-shadow": "0 6px 14px rgba(0, 0, 0, 0.22)"
+                        }
+                      ],
+                      "custom_fields": {
+                        "main": [
+                          {
+                            "grid-area": "main"
+                          },
+                          {
+                            "width": "100%"
+                          },
+                          {
+                            "align-self": "center"
+                          }
+                        ],
+                        "switch": [
+                          {
+                            "grid-area": "switch"
+                          },
+                          {
+                            "justify-self": "end"
+                          },
+                          {
+                            "align-self": "center"
+                          }
+                        ]
+                      },
+                      "grid": [
+                        {
+                          "display": "grid"
+                        },
+                        {
+                          "grid-template-areas": "\"main switch\""
+                        },
+                        {
+                          "grid-template-columns": "1fr 62px"
+                        },
+                        {
+                          "grid-template-rows": "1fr"
+                        }
+                      ]
+                    },
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "triggers_update": [
+                      "light.badevaerelse_light"
+                    ],
+                    "type": "custom:button-card"
+                  },
+                  {
+                    "custom_fields": {
+                      "main": "[[[\n  const expand = (id, seen = new Set()) => {\n    if (seen.has(id)) return [];\n    seen.add(id);\n    const s = states[id];\n    if (!s) return [];\n    const m = s.attributes?.entity_id;\n    if (Array.isArray(m) && m.length > 0) return m.flatMap(mid => expand(mid, seen));\n    return [id];\n  };\n  const entityId = 'light.sovevaerelse_lights';\n  const e = states[entityId];\n  if (!e) return `<div class=\"light-head\"><div class=\"light-icon\"><ha-icon icon=\"mdi:bed-king-outline\"></ha-icon></div><div><div class=\"light-name\">Soveværelse</div><div class=\"light-state\">Entity mangler</div></div></div>`;\n  const members = expand(entityId);\n  const total = members.length || 1;\n  const onCount = members.filter(id => states[id]?.state === 'on').length;\n  const on = onCount > 0;\n  let status = 'Slukket';\n  if (on) status = total > 1 ? `${onCount} af ${total} tændt` : 'Tændt';\n  return `<div class=\"light-head\"><div class=\"light-icon ${on ? 'on' : ''}\"><ha-icon icon=\"mdi:bed-king-outline\"></ha-icon></div><div><div class=\"light-name\">Soveværelse</div><div class=\"light-state\">${status}</div></div></div>`;\n]]]",
+                      "switch": "[[[\n  const on = states['light.sovevaerelse_lights']?.state === 'on';\n  return `<div class=\"light-toggle ${on ? 'on' : 'off'}\"><div class=\"light-toggle-knob\"></div></div>`;\n]]]"
+                    },
+                    "entity": "light.sovevaerelse_lights",
+                    "extra_styles": ".light-head{display:flex;align-items:center;gap:12px}\n.light-icon{width:42px;height:42px;border-radius:16px;display:flex;align-items:center;justify-content:center;color:rgba(244,246,242,0.72)}\n.light-icon.on{color:#FFE65A}\n.light-icon ha-icon{width:30px;height:30px}\n.light-name{text-align:left;color:#F4F6F2;font-size:15px;font-weight:850;line-height:1.1}\n.light-state{text-align:left;margin-top:4px;color:rgba(244,246,242,0.70);font-size:11px;font-weight:700;white-space:nowrap}\n.light-toggle{width:56px;height:30px;border-radius:999px;position:relative;background:rgba(130,135,145,0.45);box-shadow:inset 0 1px 2px rgba(0,0,0,0.24)}\n.light-toggle.on{background:linear-gradient(90deg,#FFB03A,#FFE65A)}\n.light-toggle-knob{position:absolute;width:26px;height:26px;top:2px;left:2px;border-radius:50%;background:#F4F6F2;box-shadow:0 2px 5px rgba(0,0,0,0.28);transition:left 0.18s ease}\n.light-toggle.on .light-toggle-knob{left:28px}\n",
+                    "hold_action": {
+                      "action": "more-info"
+                    },
+                    "show_icon": false,
+                    "show_name": false,
+                    "show_state": false,
+                    "styles": {
+                      "card": [
+                        {
+                          "height": "114px"
+                        },
+                        {
+                          "border-radius": "22px"
+                        },
+                        {
+                          "padding": "10px"
+                        },
+                        {
+                          "background": "[[[return states['light.sovevaerelse_lights']?.state === 'on' ? 'rgba(96, 56, 46, 0.78)' : 'rgba(18, 21, 30, 0.68)';]]]"
+                        },
+                        {
+                          "border": "[[[return states['light.sovevaerelse_lights']?.state === 'on' ? '1px solid rgba(255, 176, 58, 0.82)' : '1px solid rgba(247, 248, 244, 0.10)';]]]"
+                        },
+                        {
+                          "box-shadow": "0 6px 14px rgba(0, 0, 0, 0.22)"
+                        }
+                      ],
+                      "custom_fields": {
+                        "main": [
+                          {
+                            "grid-area": "main"
+                          },
+                          {
+                            "width": "100%"
+                          },
+                          {
+                            "align-self": "center"
+                          }
+                        ],
+                        "switch": [
+                          {
+                            "grid-area": "switch"
+                          },
+                          {
+                            "justify-self": "end"
+                          },
+                          {
+                            "align-self": "center"
+                          }
+                        ]
+                      },
+                      "grid": [
+                        {
+                          "display": "grid"
+                        },
+                        {
+                          "grid-template-areas": "\"main switch\""
+                        },
+                        {
+                          "grid-template-columns": "1fr 62px"
+                        },
+                        {
+                          "grid-template-rows": "1fr"
+                        }
+                      ]
+                    },
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "triggers_update": [
+                      "light.sovevaerelse_lights"
+                    ],
+                    "type": "custom:button-card"
+                  },
+                  {
+                    "custom_fields": {
+                      "main": "[[[\n  const expand = (id, seen = new Set()) => {\n    if (seen.has(id)) return [];\n    seen.add(id);\n    const s = states[id];\n    if (!s) return [];\n    const m = s.attributes?.entity_id;\n    if (Array.isArray(m) && m.length > 0) return m.flatMap(mid => expand(mid, seen));\n    return [id];\n  };\n  const entityId = 'light.caroline_lights';\n  const e = states[entityId];\n  if (!e) return `<div class=\"light-head\"><div class=\"light-icon\"><ha-icon icon=\"mdi:baby-face-outline\"></ha-icon></div><div><div class=\"light-name\">Caroline</div><div class=\"light-state\">Entity mangler</div></div></div>`;\n  const members = expand(entityId);\n  const total = members.length || 1;\n  const onCount = members.filter(id => states[id]?.state === 'on').length;\n  const on = onCount > 0;\n  let status = 'Slukket';\n  if (on) status = total > 1 ? `${onCount} af ${total} tændt` : 'Tændt';\n  return `<div class=\"light-head\"><div class=\"light-icon ${on ? 'on' : ''}\"><ha-icon icon=\"mdi:baby-face-outline\"></ha-icon></div><div><div class=\"light-name\">Caroline</div><div class=\"light-state\">${status}</div></div></div>`;\n]]]",
+                      "switch": "[[[\n  const on = states['light.caroline_lights']?.state === 'on';\n  return `<div class=\"light-toggle ${on ? 'on' : 'off'}\"><div class=\"light-toggle-knob\"></div></div>`;\n]]]"
+                    },
+                    "entity": "light.caroline_lights",
+                    "extra_styles": ".light-head{display:flex;align-items:center;gap:12px}\n.light-icon{width:42px;height:42px;border-radius:16px;display:flex;align-items:center;justify-content:center;color:rgba(244,246,242,0.72)}\n.light-icon.on{color:#FFE65A}\n.light-icon ha-icon{width:30px;height:30px}\n.light-name{text-align:left;color:#F4F6F2;font-size:15px;font-weight:850;line-height:1.1}\n.light-state{text-align:left;margin-top:4px;color:rgba(244,246,242,0.70);font-size:11px;font-weight:700;white-space:nowrap}\n.light-toggle{width:56px;height:30px;border-radius:999px;position:relative;background:rgba(130,135,145,0.45);box-shadow:inset 0 1px 2px rgba(0,0,0,0.24)}\n.light-toggle.on{background:linear-gradient(90deg,#FFB03A,#FFE65A)}\n.light-toggle-knob{position:absolute;width:26px;height:26px;top:2px;left:2px;border-radius:50%;background:#F4F6F2;box-shadow:0 2px 5px rgba(0,0,0,0.28);transition:left 0.18s ease}\n.light-toggle.on .light-toggle-knob{left:28px}\n",
+                    "hold_action": {
+                      "action": "more-info"
+                    },
+                    "show_icon": false,
+                    "show_name": false,
+                    "show_state": false,
+                    "styles": {
+                      "card": [
+                        {
+                          "height": "114px"
+                        },
+                        {
+                          "border-radius": "22px"
+                        },
+                        {
+                          "padding": "10px"
+                        },
+                        {
+                          "background": "[[[return states['light.caroline_lights']?.state === 'on' ? 'rgba(96, 56, 46, 0.78)' : 'rgba(18, 21, 30, 0.68)';]]]"
+                        },
+                        {
+                          "border": "[[[return states['light.caroline_lights']?.state === 'on' ? '1px solid rgba(255, 176, 58, 0.82)' : '1px solid rgba(247, 248, 244, 0.10)';]]]"
+                        },
+                        {
+                          "box-shadow": "0 6px 14px rgba(0, 0, 0, 0.22)"
+                        }
+                      ],
+                      "custom_fields": {
+                        "main": [
+                          {
+                            "grid-area": "main"
+                          },
+                          {
+                            "width": "100%"
+                          },
+                          {
+                            "align-self": "center"
+                          }
+                        ],
+                        "switch": [
+                          {
+                            "grid-area": "switch"
+                          },
+                          {
+                            "justify-self": "end"
+                          },
+                          {
+                            "align-self": "center"
+                          }
+                        ]
+                      },
+                      "grid": [
+                        {
+                          "display": "grid"
+                        },
+                        {
+                          "grid-template-areas": "\"main switch\""
+                        },
+                        {
+                          "grid-template-columns": "1fr 62px"
+                        },
+                        {
+                          "grid-template-rows": "1fr"
+                        }
+                      ]
+                    },
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "triggers_update": [
+                      "light.caroline_lights"
+                    ],
+                    "type": "custom:button-card"
+                  },
+                  {
+                    "custom_fields": {
+                      "main": "[[[\n  const expand = (id, seen = new Set()) => {\n    if (seen.has(id)) return [];\n    seen.add(id);\n    const s = states[id];\n    if (!s) return [];\n    const m = s.attributes?.entity_id;\n    if (Array.isArray(m) && m.length > 0) return m.flatMap(mid => expand(mid, seen));\n    return [id];\n  };\n  const entityId = 'light.garderobe';\n  const e = states[entityId];\n  if (!e) return `<div class=\"light-head\"><div class=\"light-icon\"><ha-icon icon=\"mdi:hanger\"></ha-icon></div><div><div class=\"light-name\">Garderobe</div><div class=\"light-state\">Entity mangler</div></div></div>`;\n  const members = expand(entityId);\n  const total = members.length || 1;\n  const onCount = members.filter(id => states[id]?.state === 'on').length;\n  const on = onCount > 0;\n  let status = 'Slukket';\n  if (on) status = total > 1 ? `${onCount} af ${total} tændt` : 'Tændt';\n  return `<div class=\"light-head\"><div class=\"light-icon ${on ? 'on' : ''}\"><ha-icon icon=\"mdi:hanger\"></ha-icon></div><div><div class=\"light-name\">Garderobe</div><div class=\"light-state\">${status}</div></div></div>`;\n]]]",
+                      "switch": "[[[\n  const on = states['light.garderobe']?.state === 'on';\n  return `<div class=\"light-toggle ${on ? 'on' : 'off'}\"><div class=\"light-toggle-knob\"></div></div>`;\n]]]"
+                    },
+                    "entity": "light.garderobe",
+                    "extra_styles": ".light-head{display:flex;align-items:center;gap:12px}\n.light-icon{width:42px;height:42px;border-radius:16px;display:flex;align-items:center;justify-content:center;color:rgba(244,246,242,0.72)}\n.light-icon.on{color:#FFE65A}\n.light-icon ha-icon{width:30px;height:30px}\n.light-name{text-align:left;color:#F4F6F2;font-size:15px;font-weight:850;line-height:1.1}\n.light-state{text-align:left;margin-top:4px;color:rgba(244,246,242,0.70);font-size:11px;font-weight:700;white-space:nowrap}\n.light-toggle{width:56px;height:30px;border-radius:999px;position:relative;background:rgba(130,135,145,0.45);box-shadow:inset 0 1px 2px rgba(0,0,0,0.24)}\n.light-toggle.on{background:linear-gradient(90deg,#FFB03A,#FFE65A)}\n.light-toggle-knob{position:absolute;width:26px;height:26px;top:2px;left:2px;border-radius:50%;background:#F4F6F2;box-shadow:0 2px 5px rgba(0,0,0,0.28);transition:left 0.18s ease}\n.light-toggle.on .light-toggle-knob{left:28px}\n",
+                    "hold_action": {
+                      "action": "more-info"
+                    },
+                    "show_icon": false,
+                    "show_name": false,
+                    "show_state": false,
+                    "styles": {
+                      "card": [
+                        {
+                          "height": "114px"
+                        },
+                        {
+                          "border-radius": "22px"
+                        },
+                        {
+                          "padding": "10px"
+                        },
+                        {
+                          "background": "[[[return states['light.garderobe']?.state === 'on' ? 'rgba(96, 56, 46, 0.78)' : 'rgba(18, 21, 30, 0.68)';]]]"
+                        },
+                        {
+                          "border": "[[[return states['light.garderobe']?.state === 'on' ? '1px solid rgba(255, 176, 58, 0.82)' : '1px solid rgba(247, 248, 244, 0.10)';]]]"
+                        },
+                        {
+                          "box-shadow": "0 6px 14px rgba(0, 0, 0, 0.22)"
+                        }
+                      ],
+                      "custom_fields": {
+                        "main": [
+                          {
+                            "grid-area": "main"
+                          },
+                          {
+                            "width": "100%"
+                          },
+                          {
+                            "align-self": "center"
+                          }
+                        ],
+                        "switch": [
+                          {
+                            "grid-area": "switch"
+                          },
+                          {
+                            "justify-self": "end"
+                          },
+                          {
+                            "align-self": "center"
+                          }
+                        ]
+                      },
+                      "grid": [
+                        {
+                          "display": "grid"
+                        },
+                        {
+                          "grid-template-areas": "\"main switch\""
+                        },
+                        {
+                          "grid-template-columns": "1fr 62px"
+                        },
+                        {
+                          "grid-template-rows": "1fr"
+                        }
+                      ]
+                    },
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "triggers_update": [
+                      "light.garderobe"
+                    ],
+                    "type": "custom:button-card"
+                  },
+                  {
+                    "custom_fields": {
+                      "main": "[[[\n  const expand = (id, seen = new Set()) => {\n    if (seen.has(id)) return [];\n    seen.add(id);\n    const s = states[id];\n    if (!s) return [];\n    const m = s.attributes?.entity_id;\n    if (Array.isArray(m) && m.length > 0) return m.flatMap(mid => expand(mid, seen));\n    return [id];\n  };\n  const entityIds = ['light.kokken_lights', 'light.kokken_lys_niche', 'light.kokken_kokken_daemper', 'light.overskabe', 'light.hylder'];\n  const allMembers = [];\n  entityIds.forEach(eid => allMembers.push(...expand(eid)));\n  const total = allMembers.length;\n  const onCount = allMembers.filter(id => states[id]?.state === 'on').length;\n  const on = onCount > 0;\n  let status = 'Slukket';\n  if (on) status = `${onCount} af ${total} tændt`;\n  return `<div class=\"light-head\"><div class=\"light-icon ${on ? 'on' : ''}\"><ha-icon icon=\"mdi:silverware-fork-knife\"></ha-icon></div><div><div class=\"light-name\">Køkken</div><div class=\"light-state\">${status}</div></div></div>`;\n]]]",
+                      "switch": "[[[\n  const groups = ['light.kokken_lights', 'light.kokken_lys_niche', 'light.kokken_kokken_daemper', 'light.overskabe', 'light.hylder'];\n  const anyOn = groups.some(id => states[id]?.state === 'on');\n  return `<div class=\"light-toggle ${anyOn ? 'on' : 'off'}\"><div class=\"light-toggle-knob\"></div></div>`;\n]]]"
+                    },
+                    "entity": "light.kokken_lights",
+                    "extra_styles": ".light-head{display:flex;align-items:center;gap:12px}\n.light-icon{width:42px;height:42px;border-radius:16px;display:flex;align-items:center;justify-content:center;color:rgba(244,246,242,0.72)}\n.light-icon.on{color:#FFE65A}\n.light-icon ha-icon{width:30px;height:30px}\n.light-name{text-align:left;color:#F4F6F2;font-size:15px;font-weight:850;line-height:1.1}\n.light-state{text-align:left;margin-top:4px;color:rgba(244,246,242,0.70);font-size:11px;font-weight:700;white-space:nowrap}\n.light-toggle{width:56px;height:30px;border-radius:999px;position:relative;background:rgba(130,135,145,0.45);box-shadow:inset 0 1px 2px rgba(0,0,0,0.24)}\n.light-toggle.on{background:linear-gradient(90deg,#FFB03A,#FFE65A)}\n.light-toggle-knob{position:absolute;width:26px;height:26px;top:2px;left:2px;border-radius:50%;background:#F4F6F2;box-shadow:0 2px 5px rgba(0,0,0,0.28);transition:left 0.18s ease}\n.light-toggle.on .light-toggle-knob{left:28px}\n",
+                    "hold_action": {
+                      "action": "more-info"
+                    },
+                    "show_icon": false,
+                    "show_name": false,
+                    "show_state": false,
+                    "styles": {
+                      "card": [
+                        {
+                          "height": "114px"
+                        },
+                        {
+                          "border-radius": "22px"
+                        },
+                        {
+                          "padding": "10px"
+                        },
+                        {
+                          "background": "[[[const g=['light.kokken_lights','light.kokken_lys_niche','light.kokken_kokken_daemper','light.overskabe','light.hylder']; return g.some(id => states[id]?.state === 'on') ? 'rgba(96, 56, 46, 0.78)' : 'rgba(18, 21, 30, 0.68)';]]]"
+                        },
+                        {
+                          "border": "[[[const g=['light.kokken_lights','light.kokken_lys_niche','light.kokken_kokken_daemper','light.overskabe','light.hylder']; return g.some(id => states[id]?.state === 'on') ? '1px solid rgba(255, 176, 58, 0.82)' : '1px solid rgba(247, 248, 244, 0.10)';]]]"
+                        },
+                        {
+                          "box-shadow": "0 6px 14px rgba(0, 0, 0, 0.22)"
+                        }
+                      ],
+                      "custom_fields": {
+                        "main": [
+                          {
+                            "grid-area": "main"
+                          },
+                          {
+                            "width": "100%"
+                          },
+                          {
+                            "align-self": "center"
+                          }
+                        ],
+                        "switch": [
+                          {
+                            "grid-area": "switch"
+                          },
+                          {
+                            "justify-self": "end"
+                          },
+                          {
+                            "align-self": "center"
+                          }
+                        ]
+                      },
+                      "grid": [
+                        {
+                          "display": "grid"
+                        },
+                        {
+                          "grid-template-areas": "\"main switch\""
+                        },
+                        {
+                          "grid-template-columns": "1fr 62px"
+                        },
+                        {
+                          "grid-template-rows": "1fr"
+                        }
+                      ]
+                    },
+                    "tap_action": {
+                      "action": "call-service",
+                      "service": "[[[\n  const groups = ['light.kokken_lights', 'light.kokken_lys_niche', 'light.kokken_kokken_daemper', 'light.overskabe', 'light.hylder'];\n  const anyOn = groups.some(id => states[id]?.state === 'on');\n  return anyOn ? 'light.turn_off' : 'light.turn_on';\n]]]",
+                      "target": {
+                        "entity_id": [
+                          "light.kokken_lights",
+                          "light.kokken_lys_niche",
+                          "light.kokken_kokken_daemper",
+                          "light.overskabe",
+                          "light.hylder"
+                        ]
+                      }
+                    },
+                    "triggers_update": [
+                      "light.kokken_lights",
+                      "light.kokken_lys_niche",
+                      "light.kokken_kokken_daemper",
+                      "light.overskabe",
+                      "light.hylder"
+                    ],
+                    "type": "custom:button-card"
+                  },
+                  {
+                    "custom_fields": {
+                      "main": "[[[\n  const expand = (id, seen = new Set()) => {\n    if (seen.has(id)) return [];\n    seen.add(id);\n    const s = states[id];\n    if (!s) return [];\n    const m = s.attributes?.entity_id;\n    if (Array.isArray(m) && m.length > 0) return m.flatMap(mid => expand(mid, seen));\n    return [id];\n  };\n  const entityId = 'light.stue_lights';\n  const e = states[entityId];\n  if (!e) return `<div class=\"light-head\"><div class=\"light-icon\"><ha-icon icon=\"mdi:sofa-outline\"></ha-icon></div><div><div class=\"light-name\">Stue</div><div class=\"light-state\">Entity mangler</div></div></div>`;\n  const members = expand(entityId);\n  const total = members.length || 1;\n  const onCount = members.filter(id => states[id]?.state === 'on').length;\n  const on = onCount > 0;\n  let status = 'Slukket';\n  if (on) status = total > 1 ? `${onCount} af ${total} tændt` : 'Tændt';\n  return `<div class=\"light-head\"><div class=\"light-icon ${on ? 'on' : ''}\"><ha-icon icon=\"mdi:sofa-outline\"></ha-icon></div><div><div class=\"light-name\">Stue</div><div class=\"light-state\">${status}</div></div></div>`;\n]]]",
+                      "switch": "[[[\n  const on = states['light.stue_lights']?.state === 'on';\n  return `<div class=\"light-toggle ${on ? 'on' : 'off'}\"><div class=\"light-toggle-knob\"></div></div>`;\n]]]"
+                    },
+                    "entity": "light.stue_lights",
+                    "extra_styles": ".light-head{display:flex;align-items:center;gap:12px}\n.light-icon{width:42px;height:42px;border-radius:16px;display:flex;align-items:center;justify-content:center;color:rgba(244,246,242,0.72)}\n.light-icon.on{color:#FFE65A}\n.light-icon ha-icon{width:30px;height:30px}\n.light-name{text-align:left;color:#F4F6F2;font-size:15px;font-weight:850;line-height:1.1}\n.light-state{text-align:left;margin-top:4px;color:rgba(244,246,242,0.70);font-size:11px;font-weight:700;white-space:nowrap}\n.light-toggle{width:56px;height:30px;border-radius:999px;position:relative;background:rgba(130,135,145,0.45);box-shadow:inset 0 1px 2px rgba(0,0,0,0.24)}\n.light-toggle.on{background:linear-gradient(90deg,#FFB03A,#FFE65A)}\n.light-toggle-knob{position:absolute;width:26px;height:26px;top:2px;left:2px;border-radius:50%;background:#F4F6F2;box-shadow:0 2px 5px rgba(0,0,0,0.28);transition:left 0.18s ease}\n.light-toggle.on .light-toggle-knob{left:28px}\n",
+                    "hold_action": {
+                      "action": "more-info"
+                    },
+                    "show_icon": false,
+                    "show_name": false,
+                    "show_state": false,
+                    "styles": {
+                      "card": [
+                        {
+                          "height": "114px"
+                        },
+                        {
+                          "border-radius": "22px"
+                        },
+                        {
+                          "padding": "10px"
+                        },
+                        {
+                          "background": "[[[return states['light.stue_lights']?.state === 'on' ? 'rgba(96, 56, 46, 0.78)' : 'rgba(18, 21, 30, 0.68)';]]]"
+                        },
+                        {
+                          "border": "[[[return states['light.stue_lights']?.state === 'on' ? '1px solid rgba(255, 176, 58, 0.82)' : '1px solid rgba(247, 248, 244, 0.10)';]]]"
+                        },
+                        {
+                          "box-shadow": "0 6px 14px rgba(0, 0, 0, 0.22)"
+                        }
+                      ],
+                      "custom_fields": {
+                        "main": [
+                          {
+                            "grid-area": "main"
+                          },
+                          {
+                            "width": "100%"
+                          },
+                          {
+                            "align-self": "center"
+                          }
+                        ],
+                        "switch": [
+                          {
+                            "grid-area": "switch"
+                          },
+                          {
+                            "justify-self": "end"
+                          },
+                          {
+                            "align-self": "center"
+                          }
+                        ]
+                      },
+                      "grid": [
+                        {
+                          "display": "grid"
+                        },
+                        {
+                          "grid-template-areas": "\"main switch\""
+                        },
+                        {
+                          "grid-template-columns": "1fr 62px"
+                        },
+                        {
+                          "grid-template-rows": "1fr"
+                        }
+                      ]
+                    },
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "triggers_update": [
+                      "light.stue_lights"
+                    ],
+                    "type": "custom:button-card"
+                  },
+                  {
+                    "custom_fields": {
+                      "main": "[[[\n  const expand = (id, seen = new Set()) => {\n    if (seen.has(id)) return [];\n    seen.add(id);\n    const s = states[id];\n    if (!s) return [];\n    const m = s.attributes?.entity_id;\n    if (Array.isArray(m) && m.length > 0) return m.flatMap(mid => expand(mid, seen));\n    return [id];\n  };\n  const entityId = 'light.nedenunder';\n  const e = states[entityId];\n  if (!e) return `<div class=\"light-head\"><div class=\"light-icon\"><ha-icon icon=\"mdi:floor-lamp\"></ha-icon></div><div><div class=\"light-name\">Nedenunder</div><div class=\"light-state\">Entity mangler</div></div></div>`;\n  const members = expand(entityId);\n  const total = members.length || 1;\n  const onCount = members.filter(id => states[id]?.state === 'on').length;\n  const on = onCount > 0;\n  let status = 'Slukket';\n  if (on) status = total > 1 ? `${onCount} af ${total} tændt` : 'Tændt';\n  return `<div class=\"light-head\"><div class=\"light-icon ${on ? 'on' : ''}\"><ha-icon icon=\"mdi:floor-lamp\"></ha-icon></div><div><div class=\"light-name\">Nedenunder</div><div class=\"light-state\">${status}</div></div></div>`;\n]]]",
+                      "switch": "[[[\n  const on = states['light.nedenunder']?.state === 'on';\n  return `<div class=\"light-toggle ${on ? 'on' : 'off'}\"><div class=\"light-toggle-knob\"></div></div>`;\n]]]"
+                    },
+                    "entity": "light.nedenunder",
+                    "extra_styles": ".light-head{display:flex;align-items:center;gap:12px}\n.light-icon{width:42px;height:42px;border-radius:16px;display:flex;align-items:center;justify-content:center;color:rgba(244,246,242,0.72)}\n.light-icon.on{color:#FFE65A}\n.light-icon ha-icon{width:30px;height:30px}\n.light-name{text-align:left;color:#F4F6F2;font-size:15px;font-weight:850;line-height:1.1}\n.light-state{text-align:left;margin-top:4px;color:rgba(244,246,242,0.70);font-size:11px;font-weight:700;white-space:nowrap}\n.light-toggle{width:56px;height:30px;border-radius:999px;position:relative;background:rgba(130,135,145,0.45);box-shadow:inset 0 1px 2px rgba(0,0,0,0.24)}\n.light-toggle.on{background:linear-gradient(90deg,#FFB03A,#FFE65A)}\n.light-toggle-knob{position:absolute;width:26px;height:26px;top:2px;left:2px;border-radius:50%;background:#F4F6F2;box-shadow:0 2px 5px rgba(0,0,0,0.28);transition:left 0.18s ease}\n.light-toggle.on .light-toggle-knob{left:28px}\n",
+                    "hold_action": {
+                      "action": "more-info"
+                    },
+                    "show_icon": false,
+                    "show_name": false,
+                    "show_state": false,
+                    "styles": {
+                      "card": [
+                        {
+                          "height": "114px"
+                        },
+                        {
+                          "border-radius": "22px"
+                        },
+                        {
+                          "padding": "10px"
+                        },
+                        {
+                          "background": "[[[return states['light.nedenunder']?.state === 'on' ? 'rgba(96, 56, 46, 0.78)' : 'rgba(18, 21, 30, 0.68)';]]]"
+                        },
+                        {
+                          "border": "[[[return states['light.nedenunder']?.state === 'on' ? '1px solid rgba(255, 176, 58, 0.82)' : '1px solid rgba(247, 248, 244, 0.10)';]]]"
+                        },
+                        {
+                          "box-shadow": "0 6px 14px rgba(0, 0, 0, 0.22)"
+                        }
+                      ],
+                      "custom_fields": {
+                        "main": [
+                          {
+                            "grid-area": "main"
+                          },
+                          {
+                            "width": "100%"
+                          },
+                          {
+                            "align-self": "center"
+                          }
+                        ],
+                        "switch": [
+                          {
+                            "grid-area": "switch"
+                          },
+                          {
+                            "justify-self": "end"
+                          },
+                          {
+                            "align-self": "center"
+                          }
+                        ]
+                      },
+                      "grid": [
+                        {
+                          "display": "grid"
+                        },
+                        {
+                          "grid-template-areas": "\"main switch\""
+                        },
+                        {
+                          "grid-template-columns": "1fr 62px"
+                        },
+                        {
+                          "grid-template-rows": "1fr"
+                        }
+                      ]
+                    },
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "triggers_update": [
+                      "light.nedenunder"
+                    ],
+                    "type": "custom:button-card"
+                  },
+                  {
+                    "custom_fields": {
+                      "main": "[[[\n  const expand = (id, seen = new Set()) => {\n    if (seen.has(id)) return [];\n    seen.add(id);\n    const s = states[id];\n    if (!s) return [];\n    const m = s.attributes?.entity_id;\n    if (Array.isArray(m) && m.length > 0) return m.flatMap(mid => expand(mid, seen));\n    return [id];\n  };\n  const entityId = 'light.ovenpa';\n  const e = states[entityId];\n  if (!e) return `<div class=\"light-head\"><div class=\"light-icon\"><ha-icon icon=\"mdi:chandelier\"></ha-icon></div><div><div class=\"light-name\">Ovenpå</div><div class=\"light-state\">Entity mangler</div></div></div>`;\n  const members = expand(entityId);\n  const total = members.length || 1;\n  const onCount = members.filter(id => states[id]?.state === 'on').length;\n  const on = onCount > 0;\n  let status = 'Slukket';\n  if (on) status = total > 1 ? `${onCount} af ${total} tændt` : 'Tændt';\n  return `<div class=\"light-head\"><div class=\"light-icon ${on ? 'on' : ''}\"><ha-icon icon=\"mdi:chandelier\"></ha-icon></div><div><div class=\"light-name\">Ovenpå</div><div class=\"light-state\">${status}</div></div></div>`;\n]]]",
+                      "switch": "[[[\n  const on = states['light.ovenpa']?.state === 'on';\n  return `<div class=\"light-toggle ${on ? 'on' : 'off'}\"><div class=\"light-toggle-knob\"></div></div>`;\n]]]"
+                    },
+                    "entity": "light.ovenpa",
+                    "extra_styles": ".light-head{display:flex;align-items:center;gap:12px}\n.light-icon{width:42px;height:42px;border-radius:16px;display:flex;align-items:center;justify-content:center;color:rgba(244,246,242,0.72)}\n.light-icon.on{color:#FFE65A}\n.light-icon ha-icon{width:30px;height:30px}\n.light-name{text-align:left;color:#F4F6F2;font-size:15px;font-weight:850;line-height:1.1}\n.light-state{text-align:left;margin-top:4px;color:rgba(244,246,242,0.70);font-size:11px;font-weight:700;white-space:nowrap}\n.light-toggle{width:56px;height:30px;border-radius:999px;position:relative;background:rgba(130,135,145,0.45);box-shadow:inset 0 1px 2px rgba(0,0,0,0.24)}\n.light-toggle.on{background:linear-gradient(90deg,#FFB03A,#FFE65A)}\n.light-toggle-knob{position:absolute;width:26px;height:26px;top:2px;left:2px;border-radius:50%;background:#F4F6F2;box-shadow:0 2px 5px rgba(0,0,0,0.28);transition:left 0.18s ease}\n.light-toggle.on .light-toggle-knob{left:28px}\n",
+                    "hold_action": {
+                      "action": "more-info"
+                    },
+                    "show_icon": false,
+                    "show_name": false,
+                    "show_state": false,
+                    "styles": {
+                      "card": [
+                        {
+                          "height": "114px"
+                        },
+                        {
+                          "border-radius": "22px"
+                        },
+                        {
+                          "padding": "10px"
+                        },
+                        {
+                          "background": "[[[return states['light.ovenpa']?.state === 'on' ? 'rgba(96, 56, 46, 0.78)' : 'rgba(18, 21, 30, 0.68)';]]]"
+                        },
+                        {
+                          "border": "[[[return states['light.ovenpa']?.state === 'on' ? '1px solid rgba(255, 176, 58, 0.82)' : '1px solid rgba(247, 248, 244, 0.10)';]]]"
+                        },
+                        {
+                          "box-shadow": "0 6px 14px rgba(0, 0, 0, 0.22)"
+                        }
+                      ],
+                      "custom_fields": {
+                        "main": [
+                          {
+                            "grid-area": "main"
+                          },
+                          {
+                            "width": "100%"
+                          },
+                          {
+                            "align-self": "center"
+                          }
+                        ],
+                        "switch": [
+                          {
+                            "grid-area": "switch"
+                          },
+                          {
+                            "justify-self": "end"
+                          },
+                          {
+                            "align-self": "center"
+                          }
+                        ]
+                      },
+                      "grid": [
+                        {
+                          "display": "grid"
+                        },
+                        {
+                          "grid-template-areas": "\"main switch\""
+                        },
+                        {
+                          "grid-template-columns": "1fr 62px"
+                        },
+                        {
+                          "grid-template-rows": "1fr"
+                        }
+                      ]
+                    },
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "triggers_update": [
+                      "light.ovenpa"
+                    ],
+                    "type": "custom:button-card"
+                  }
+                ],
+                "columns": 3,
+                "square": false,
+                "type": "grid"
+              }
+            },
+            "master": {
+              "card": {
+                "custom_fields": {
+                  "text": "[[[\n  return `<div class=\"master-title\">Alt lys</div>`;\n]]]",
+                  "toggle": "[[[\n  const groups = ['light.kontor_lights', 'light.badevaerelse_light', 'light.sovevaerelse_lights', 'light.caroline_lights', 'light.garderobe', 'light.kokken_lights', 'light.kokken_lys_niche', 'light.kokken_kokken_daemper', 'light.overskabe', 'light.hylder', 'light.stue_lights', 'light.nedenunder', 'light.ovenpa'];\n  const anyOn = groups.some(id => states[id]?.state === 'on');\n  return `<div class=\"master-switch ${anyOn ? 'on' : 'off'}\"><div class=\"master-knob\"></div></div>`;\n]]]"
+                },
+                "extra_styles": ".master-title{color:#F4F6F2;font-size:12px;font-weight:850;line-height:1;white-space:nowrap}\n.master-switch{width:50px;height:30px;border-radius:999px;position:relative;background:rgba(130,135,145,0.44);box-shadow:inset 0 1px 2px rgba(0,0,0,0.24)}\n.master-switch.on{background:linear-gradient(90deg,#FFB03A,#FFE65A)}\n.master-knob{position:absolute;width:26px;height:26px;top:2px;left:2px;border-radius:50%;background:#F4F6F2;box-shadow:0 2px 5px rgba(0,0,0,0.28);transition:left 0.18s ease}\n.master-switch.on .master-knob{left:22px}\n",
+                "show_icon": false,
+                "show_name": false,
+                "show_state": false,
+                "styles": {
+                  "card": [
+                    {
+                      "width": "136px"
+                    },
+                    {
+                      "height": "52px"
+                    },
+                    {
+                      "border-radius": "20px"
+                    },
+                    {
+                      "padding": "0 8px 0 12px"
+                    },
+                    {
+                      "background": "rgba(18, 21, 30, 0.82)"
+                    },
+                    {
+                      "border": "1px solid rgba(247, 248, 244, 0.14)"
+                    },
+                    {
+                      "box-shadow": "0 5px 12px rgba(0, 0, 0, 0.18)"
+                    }
+                  ],
+                  "custom_fields": {
+                    "text": [
+                      {
+                        "grid-area": "text"
+                      },
+                      {
+                        "justify-self": "start"
+                      }
+                    ],
+                    "toggle": [
+                      {
+                        "grid-area": "toggle"
+                      },
+                      {
+                        "justify-self": "end"
+                      }
+                    ]
+                  },
+                  "grid": [
+                    {
+                      "display": "grid"
+                    },
+                    {
+                      "grid-template-areas": "\"text toggle\""
+                    },
+                    {
+                      "grid-template-columns": "minmax(0, 1fr) 52px"
+                    },
+                    {
+                      "column-gap": "4px"
+                    },
+                    {
+                      "align-items": "center"
+                    }
+                  ]
+                },
+                "tap_action": {
+                  "action": "call-service",
+                  "service": "[[[\n  const groups = ['light.kontor_lights', 'light.badevaerelse_light', 'light.sovevaerelse_lights', 'light.caroline_lights', 'light.garderobe', 'light.kokken_lights', 'light.kokken_lys_niche', 'light.kokken_kokken_daemper', 'light.overskabe', 'light.hylder', 'light.stue_lights', 'light.nedenunder', 'light.ovenpa'];\n  const anyOn = groups.some(id => states[id]?.state === 'on');\n  return anyOn ? 'light.turn_off' : 'light.turn_on';\n]]]",
+                  "target": {
+                    "entity_id": [
+                      "light.kontor_lights",
+                      "light.badevaerelse_light",
+                      "light.sovevaerelse_lights",
+                      "light.caroline_lights",
+                      "light.garderobe",
+                      "light.kokken_lights",
+                      "light.kokken_lys_niche",
+                      "light.kokken_kokken_daemper",
+                      "light.overskabe",
+                      "light.hylder",
+                      "light.stue_lights",
+                      "light.nedenunder",
+                      "light.ovenpa"
+                    ]
+                  }
+                },
+                "triggers_update": [
+                  "light.kontor_lights",
+                  "light.badevaerelse_light",
+                  "light.sovevaerelse_lights",
+                  "light.caroline_lights",
+                  "light.garderobe",
+                  "light.kokken_lights",
+                  "light.kokken_lys_niche",
+                  "light.kokken_kokken_daemper",
+                  "light.overskabe",
+                  "light.hylder",
+                  "light.stue_lights",
+                  "light.nedenunder",
+                  "light.ovenpa"
+                ],
+                "type": "custom:button-card"
+              }
+            },
+            "menu": {
+              "card": {
+                "cards": [
+                  {
+                    "icon": "mdi:home-outline",
+                    "tap_action": {
+                      "action": "navigate",
+                      "navigation_path": "/dashboard-minipanel/home"
+                    },
+                    "template": "minipanel_menu_button",
+                    "type": "custom:button-card"
+                  },
+                  {
+                    "icon": "mdi:lightbulb-outline",
+                    "show_icon": true,
+                    "show_label": false,
+                    "show_name": false,
+                    "show_state": false,
+                    "styles": {
+                      "card": [
+                        {
+                          "width": "70px"
+                        },
+                        {
+                          "height": "70px"
+                        },
+                        {
+                          "padding": 0
+                        },
+                        {
+                          "margin": "0 auto"
+                        },
+                        {
+                          "border-radius": "18px"
+                        },
+                        {
+                          "border": 0
+                        },
+                        {
+                          "background": "transparent"
+                        },
+                        {
+                          "display": "flex"
+                        },
+                        {
+                          "align-items": "center"
+                        },
+                        {
+                          "justify-content": "center"
+                        }
+                      ],
+                      "grid": [
+                        {
+                          "display": "grid"
+                        },
+                        {
+                          "grid-template-areas": "\"i\""
+                        },
+                        {
+                          "grid-template-columns": "70px"
+                        },
+                        {
+                          "grid-template-rows": "70px"
+                        },
+                        {
+                          "align-items": "center"
+                        },
+                        {
+                          "justify-items": "center"
+                        },
+                        {
+                          "place-items": "center"
+                        }
+                      ],
+                      "icon": [
+                        {
+                          "width": "38px"
+                        },
+                        {
+                          "height": "38px"
+                        },
+                        {
+                          "color": "[[[ const groups = ['light.kontor_lights', 'light.badevaerelse_light', 'light.sovevaerelse_lights', 'light.caroline_lights', 'light.garderobe', 'light.kokken_lights', 'light.kokken_lys_niche', 'light.kokken_kokken_daemper', 'light.overskabe', 'light.hylder', 'light.stue_lights', 'light.nedenunder', 'light.ovenpa']; const on = groups.filter(e => states[e] && states[e].state === 'on'); return on.length > 0 ? '#FFBE0B' : '#F4F6F2'; ]]]"
+                        },
+                        {
+                          "margin": 0
+                        },
+                        {
+                          "padding": 0
+                        }
+                      ],
+                      "img_cell": [
+                        {
+                          "grid-area": "i"
+                        },
+                        {
+                          "width": "70px"
+                        },
+                        {
+                          "height": "70px"
+                        },
+                        {
+                          "display": "flex"
+                        },
+                        {
+                          "align-items": "center"
+                        },
+                        {
+                          "justify-content": "center"
+                        },
+                        {
+                          "margin": 0
+                        },
+                        {
+                          "padding": 0
+                        }
+                      ]
+                    },
+                    "tap_action": {
+                      "action": "navigate",
+                      "navigation_path": "/dashboard-minipanel/alle-lys"
+                    },
+                    "triggers_update": [
+                      "light.kontor_lights",
+                      "light.badevaerelse_light",
+                      "light.sovevaerelse_lights",
+                      "light.caroline_lights",
+                      "light.garderobe",
+                      "light.kokken_lights",
+                      "light.kokken_lys_niche",
+                      "light.kokken_kokken_daemper",
+                      "light.overskabe",
+                      "light.hylder",
+                      "light.stue_lights",
+                      "light.nedenunder",
+                      "light.ovenpa"
+                    ],
+                    "type": "custom:button-card",
+                    "update_timer": 10000
+                  },
+                  {
+                    "icon": "mdi:thermometer",
+                    "tap_action": {
+                      "action": "navigate",
+                      "navigation_path": "/dashboard-minipanel/klima"
+                    },
+                    "template": "minipanel_menu_button",
+                    "type": "custom:button-card"
+                  },
+                  {
+                    "icon": "mdi:speaker",
+                    "tap_action": {
+                      "action": "navigate",
+                      "navigation_path": "/dashboard-minipanel/musik"
+                    },
+                    "template": "minipanel_menu_button",
+                    "type": "custom:button-card"
+                  },
+                  {
+                    "icon": "mdi:home-automation",
+                    "tap_action": {
+                      "action": "navigate",
+                      "navigation_path": "/dashboard-minipanel/status"
+                    },
+                    "template": "minipanel_menu_button",
+                    "type": "custom:button-card"
+                  }
+                ],
+                "type": "vertical-stack"
+              }
+            }
+          },
+          "extra_styles": ".page-title{color:#F4F6F2;font-size:24px;font-weight:850;line-height:1.05;text-align:left}\n.page-subtitle{color:rgba(244,246,242,0.58);font-size:12px;font-weight:700;margin-top:5px;text-align:left}\n",
+          "show_icon": false,
+          "show_name": false,
+          "show_state": false,
+          "styles": {
+            "card": [
+              {
+                "height": "100vh"
+              },
+              {
+                "width": "100vw"
+              },
+              {
+                "padding": 0
+              },
+              {
+                "margin": 0
+              },
+              {
+                "border-radius": 0
+              },
+              {
+                "border": 0
+              },
+              {
+                "box-shadow": "none"
+              },
+              {
+                "overflow": "hidden"
+              },
+              {
+                "position": "relative"
+              },
+              {
+                "background-image": "url(\"/local/minipanelbackground.png\")"
+              },
+              {
+                "background-size": "cover"
+              },
+              {
+                "background-position": "center center"
+              },
+              {
+                "background-repeat": "no-repeat"
+              }
+            ],
+            "custom_fields": {
+              "lights": [
+                {
+                  "grid-area": "lights"
+                },
+                {
+                  "position": "absolute"
+                },
+                {
+                  "left": "34px"
+                },
+                {
+                  "right": "174px"
+                },
+                {
+                  "top": "84px"
+                },
+                {
+                  "z-index": 3
+                },
+                {
+                  "height": "358px"
+                }
+              ],
+              "master": [
+                {
+                  "position": "absolute"
+                },
+                {
+                  "right": "174px"
+                },
+                {
+                  "top": "18px"
+                },
+                {
+                  "z-index": 5
+                }
+              ],
+              "menu": [
+                {
+                  "position": "absolute"
+                },
+                {
+                  "right": "18px"
+                },
+                {
+                  "top": "36px"
+                },
+                {
+                  "width": "96px"
+                },
+                {
+                  "padding": "12px 8px"
+                },
+                {
+                  "border-radius": "30px"
+                },
+                {
+                  "background": "rgba(12, 15, 24, 0.92)"
+                },
+                {
+                  "border": "1px solid rgba(247, 248, 244, 0.14)"
+                },
+                {
+                  "box-shadow": "0 8px 16px rgba(0, 0, 0, 0.24)"
+                },
+                {
+                  "z-index": 9999
+                },
+                {
+                  "display": "flex"
+                },
+                {
+                  "align-items": "center"
+                },
+                {
+                  "justify-content": "center"
+                }
+              ]
+            },
+            "grid": [
+              {
+                "height": "100vh"
+              },
+              {
+                "width": "100vw"
+              },
+              {
+                "display": "grid"
+              },
+              {
+                "grid-template-areas": "\"lights\""
+              },
+              {
+                "grid-template-columns": "1fr"
+              },
+              {
+                "grid-template-rows": "1fr"
+              }
+            ]
+          },
+          "triggers_update": [
+            "light.kontor_lights",
+            "light.badevaerelse_light",
+            "light.sovevaerelse_lights",
+            "light.caroline_lights",
+            "light.garderobe",
+            "light.kokken_lights",
+            "light.kokken_lys_niche",
+            "light.kokken_kokken_daemper",
+            "light.overskabe",
+            "light.hylder",
+            "light.stue_lights",
+            "light.nedenunder",
+            "light.ovenpa"
+          ],
+          "type": "custom:button-card"
+        }
+      ],
+      "icon": "mdi:lightbulb-group-outline",
+      "panel": true,
+      "path": "alle-lys",
+      "title": "Alle-lys",
+      "type": "panel"
     }
   ]
 }
